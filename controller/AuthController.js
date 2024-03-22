@@ -69,6 +69,7 @@ const verifyOTP = async (req, res) => {
       res.status(403).json({ message: "You have entered the wrong OTP!" });
     }
   } catch (error) {
+  
     res
       .status(500)
       .json({ message: "verification failed!", error: error.message });
