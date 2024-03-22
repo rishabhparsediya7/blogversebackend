@@ -21,7 +21,6 @@ const create = async (req, res) => {
         .json({ success: false, message: "could not post the comment" });
     }
   } catch (error) {
-    console.log(error.message);
     res.status(500).json({ success: false, message: "It's not you. It's us!" });
   }
 };

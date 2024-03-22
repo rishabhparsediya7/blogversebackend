@@ -17,7 +17,6 @@ const generateToken = async (uuid, email) => {
 
 const getMailOTP = async (req, res) => {
   const { email, fullname } = req.body;
-  console.log(email, fullname);
   try {
     const existingUser = await UserModel.findOne({ email: email });
     if (!existingUser) {
@@ -55,14 +54,11 @@ const getMailOTP = async (req, res) => {
 
 const verifyOTP = async (req, res) => {
   const { email, otp } = req.body;
-  console.log(email, otp);
   try {
     const savedOtp = await OtpModel.findOne({ email: email });
-    console.log(savedOtp);
     if (savedOtp.otp == otp) {
       const deletedOtp = await OtpModel.deleteOne({ email: email });
       if (deletedOtp.deletedCount == 1) {
-        console.log("Deleted OTP with email:" + email);
       }
       res.status(200).json({
         message: "verification successful!",
@@ -73,7 +69,6 @@ const verifyOTP = async (req, res) => {
       res.status(403).json({ message: "You have entered the wrong OTP!" });
     }
   } catch (error) {
-    console.log(error.message);
     res
       .status(500)
       .json({ message: "verification failed!", error: error.message });
@@ -82,7 +77,6 @@ const verifyOTP = async (req, res) => {
 
 const login = async (req, res) => {
   const { email, password } = req.body;
-  console.log(email, password);
   try {
     const existingUser = await UserModel.findOne({ email: email });
     if (!existingUser) {

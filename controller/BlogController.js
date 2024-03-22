@@ -1,6 +1,6 @@
 const Blogs = require("../models/Blog");
 const { ObjectId } = require("mongodb");
-const HttpError = require("../middlewares/httperror");
+
 const getAllBlog = async (req, res) => {
   try {
     const blogs = await Blogs.find();
@@ -12,7 +12,6 @@ const getAllBlog = async (req, res) => {
 
 const editBlog = async (req, res) => {
   const blogId = req.body._id;
-  console.log("******************************************");
   const updatedData = {
     title: req.body.title,
     description: req.body.description,
@@ -29,7 +28,6 @@ const editBlog = async (req, res) => {
       res.status(404).json({ message: "Couldn't update blog", data: blog });
     }
   } catch (e) {
-    console.log(e);
     res
       .status(500)
       .json({ message: "Internal Server Error!", error: e.message });
@@ -47,7 +45,6 @@ const getBlogById = async (req, res) => {
       res.status(404).json({ message: "Blog not found", data: blog });
     }
   } catch (e) {
-    console.log(e.message);
     res
       .status(500)
       .json({ message: "Internal Server Error!", error: e.message });
@@ -60,7 +57,6 @@ const getBlogForUser = async (req, res) => {
     const blogs = await Blogs.find({ author_id: author_id });
     res.status(200).json(blogs);
   } catch (err) {
-    console.log(err);
     res.status(500).json({ error: err.message });
   }
 };
@@ -81,7 +77,6 @@ const createBlog = async (req, res) => {
     const savedBlog = await blog.save();
     res.status(201).json({ blog: savedBlog });
   } catch (err) {
-    console.log(err.message);
     res.status(500).json({ error: err.message });
   }
 };
@@ -92,13 +87,11 @@ const deleteBlog = async (req, res) => {
     const objectId = new ObjectId(documentId);
     const result = await Blogs.deleteOne({ _id: objectId });
     if (result.deletedCount === 1) {
-      console.log("Document deleted successfully");
       res.status(200).json({ message: "Document deleted successfully" });
     } else {
       res.status(404).json({ message: "No document found with specified ID" });
     }
   } catch (e) {
-    console.log(e.message);
     res
       .status(500)
       .json({ message: "Internal Server Error!", error: e.message });
