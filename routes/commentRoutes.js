@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const commentController = require("../controller/CommentController");
 
-router.get("/:blogid", commentController.getComments);
-router.post("/", commentController.create);
+router.get("/:blogid", auth, commentController.getComments);
+router.post("/", auth, commentController.create);
 
 module.exports = router;
