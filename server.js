@@ -5,6 +5,7 @@ const dbConfig = require("./database/config");
 const userRoutes = require("./routes/userRoute");
 const blogRoutes = require("./routes/blogRoutes");
 const commentRoutes = require("./routes/commentRoutes");
+const portfolio = require("./routes/portfolioRoute");
 const cors = require("cors");
 const serverless = require("serverless-http");
 const app = express();
@@ -21,6 +22,7 @@ app.use(bodyParser.json());
 app.use("/api/user", userRoutes);
 app.use("/api/blog", blogRoutes);
 app.use("/api/comment", commentRoutes);
+app.use("/api/portfolio", portfolio);
 
 module.exports.handler = serverless(app);
 app.listen(PORT, () => {

@@ -43,7 +43,41 @@ const sendMail = async (email) => {
   };
 };
 
+const sendMessageViaMailforPortFolio = async (name, message) => {
+  const transporter = await nodemailer.createTransport({
+    service: "Gmail",
+    auth: {
+      user: process.env.TRANSPORT_EMAIL,
+      pass: process.env.TRANSPORT_PASSWORD,
+    },
+  });
+  transporter.verify(function (error, success) {
+    if (error) {
+      throw new Error(error);
+    } else {
+      console.log("Server is ready to take our messages");
+    }
+  });
+  const mailOptions = {
+    from: "Portfolio Message",
+    to: "parsediyarishabh@gmail.com",
+    subject: `Message from ${name}, Shared something with you`,
+    text: `${message}`,
+  };
+  const info = await transporter.sendMail(mailOptions);
+  if (!info) {
+    return { message: "failure", sent: false };
+  }
+  return {
+    email: email,
+    response: info,
+    message: "Sent Successfully",
+    sent: true,
+  };
+};
+
 module.exports = {
   sendMail,
   generateOTP,
+  sendMessageViaMailforPortFolio,
 };
